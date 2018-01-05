@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Transactions;
 using System.Web.Http;
 
 using apiServices;
@@ -28,11 +29,41 @@ namespace web_api.Controllers
         {
             BLLService = new GBLLService(new myproEntities1());
         }
-       
 
 
 
-        public class JqGridJson
+
+        public bool Transaction(Func<bool> fun, ref string msg, Func<Exception, string> exceptionAction = null)
+        {
+            var result = false;
+
+
+
+            using (var scope = new TransactionScope())
+            {
+                try
+                {
+                    result = fun();
+                    if (result) scope.Complete();
+                }
+                catch (Exception ex)
+                {
+
+                    msg = ex.Message;
+                    if (exceptionAction != null)
+                    {
+                        msg = exceptionAction(ex);
+                    }
+                }
+                finally { }
+            }
+
+            return result;
+        }
+    }
+
+
+    public class JqGridJson
         {
             public int page { get; set; }
             public int records { get; set; }

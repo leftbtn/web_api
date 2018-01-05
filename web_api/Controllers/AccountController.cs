@@ -20,21 +20,18 @@ namespace web_api.Controllers
             var result = new ResultData();
             result.success = false;
             var msg = string.Empty;
-            if (string.IsNullOrEmpty(data.Account) || string.IsNullOrEmpty(data.Password))
-            {
-                msg = "帐号密码均不能为空";
-                return result;
-            }
-            if (string.IsNullOrEmpty(data.NikeName))
-            {
-                msg = "昵称不能为空";
-                return result;
-            }
+            if (string.IsNullOrEmpty(data.Account) || string.IsNullOrEmpty(data.Password)) { msg = "帐号密码均不能为空"; return result; }
+            if (string.IsNullOrEmpty(data.NikeName)) { msg = "昵称不能为空"; return result; }
+            if (BLLService.AccountServices.ExistAccount(data.Account)) { msg = "用户名已注册"; return result; }
             var o = new User();
             o.Account = data.Account;
             o.Password = data.Password;
             o.NikeName = data.NikeName;
-            result.success = BLLService.AccountServices.Register( o ,out msg );
+            result.success = Transaction(new Func<bool>(delegate ()
+            {
+                result.success = BLLService.AccountServices.Register(o, out msg);
+                return result.success;
+            }), ref msg);
             result.msg = msg;
             return result;
         }
@@ -42,19 +39,18 @@ namespace web_api.Controllers
 
         #region 登录
         [HttpPost]
-        public ResultData Login ([FromBody]LoginPostData data)
+        public ResultData Login([FromBody]LoginPostData data)
         {
             var result = new ResultData();
             result.success = false;
             var msg = string.Empty;
-            if(string.IsNullOrEmpty(data.Account) || string.IsNullOrEmpty(data.Password))
+            if (string.IsNullOrEmpty(data.Account) || string.IsNullOrEmpty(data.Password))
             {
                 msg = "帐号密码均不能为空";
                 return result;
             }
             result.success = BLLService.AccountServices.Login(data.Account, data.Password, out msg);
             result.msg = msg;
-
             return result;
         }
         #endregion
@@ -66,7 +62,7 @@ namespace web_api.Controllers
             result.success = false;
             result.msg = string.Empty;
             var o = db.User.Where(c => c.Id == userid).FirstOrDefault();
-            if(o == null)
+            if (o == null)
             {
                 result.msg = "找不到该用户";
                 return result;
@@ -74,10 +70,10 @@ namespace web_api.Controllers
             result.success = true;
             result.Account = o.Account;
             result.NikeName = o.NikeName;
-            result.CreateDateTime =  Tools.ToDateTimeString(o.CreateDateTime);
+            result.CreateDateTime = Tools.ToDateTimeString(o.CreateDateTime);
             return result;
         }
         #endregion
     }
-    
+
 }

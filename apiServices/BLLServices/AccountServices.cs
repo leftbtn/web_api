@@ -58,5 +58,14 @@ namespace apiServices.BLLServices
             return result;
         }
         #endregion
+
+        #region 判断帐号是否存在
+        public bool ExistAccount(string Account)
+        {
+            return db.User.Where(c => c.Account == Account).FirstOrDefault() != null;
+        }
+
+        #endregion
+
     }
 }
