@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Transactions;
 using System.Web.Http;
-
+using System.Transactions;
 using apiServices;
 using apiServices.BLLServices;
 using CommonFrameWork;
@@ -29,8 +28,6 @@ namespace web_api.Controllers
         {
             BLLService = new GBLLService(new myproEntities1());
         }
-
-
 
 
         public bool Transaction(Func<bool> fun, ref string msg, Func<Exception, string> exceptionAction = null)
@@ -60,10 +57,8 @@ namespace web_api.Controllers
 
             return result;
         }
-    }
 
-
-    public class JqGridJson
+        public class JqGridJson
         {
             public int page { get; set; }
             public int records { get; set; }

@@ -70,7 +70,7 @@ namespace web_api.Controllers
             result.success = true;
             result.Account = o.Account;
             result.NikeName = o.NikeName;
-            result.CreateDateTime = Tools.ToDateTimeString(o.CreateDateTime);
+            result.CreateDateTime = Tools.ToDateString(o.CreateDateTime);
             return result;
         }
         #endregion
