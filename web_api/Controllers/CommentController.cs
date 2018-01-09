@@ -8,6 +8,7 @@ using System.Web.Http;
 using web_api.Models.Blog;
 using web_api.Models.Comment;
 using web_api.Models.Other;
+using CommonFrameWork;
 
 namespace web_api.Controllers
 {
@@ -34,9 +35,34 @@ namespace web_api.Controllers
         #endregion
 
 
-        #region 根据获取评论id删除内容
+        #region 根据文章id获取评论列表
+        [HttpGet]
+        public CommentListResult CommentList(string id)
+        {
+            var Result = new CommentListResult();
+        
+            var o = db.Comment.Where(c=>c.ArticleId == id).OrderByDescending(c=>c.CreateDateTime).ToList();
+            o.ForEach(c =>
+            {
+                var user = db.User.Where(q => q.Id == c.UserId).FirstOrDefault();
+                Result.CommentList.Add(new CommentListResult.Comment
+                {
+                    articleId = c.ArticleId,
+                    userAccount = user.Account,
+                    userName = user.NikeName,
+                    details = c.Details,
+                    createDateTime = Tools.ToDateString(c.CreateDateTime)
+                });
+            });
+        
+            return Result;
+        }
+
+        #endregion
+
+        #region 根据评论id删除内容
         [HttpPost]
-        public ResultData DeleteBlogForId([FromBody]DeletePostData data)
+        public ResultData DeleteCommentForId([FromBody]DeletePostData data)
         {
             var result = new ResultData();
             result.success = false;

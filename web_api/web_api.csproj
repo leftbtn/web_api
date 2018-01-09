@@ -204,6 +204,7 @@
     <Compile Include="Models\Blog\DeletePostData.cs" />
     <Compile Include="Models\Blog\SavePostData.cs" />
     <Compile Include="Models\Carousel\CarouslListResult.cs" />
+    <Compile Include="Models\Comment\CommentListResult.cs" />
     <Compile Include="Models\Comment\SaveCommentDate.cs" />
     <Compile Include="Models\Other\AjaxStatus.cs" />
     <Compile Include="Models\Other\DataSourceRequest.cs" />

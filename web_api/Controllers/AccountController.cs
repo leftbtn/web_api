@@ -71,7 +71,7 @@ namespace web_api.Controllers
             result.success = true;
             result.Account = o.Account;
             result.NikeName = o.NikeName;
-            result.CreateDateTime = o.CreateDateTime.ToShortDateString();
+            result.CreateDateTime =  Tools.ToDateString(o.CreateDateTime);
             return result;
         }
         #endregion
