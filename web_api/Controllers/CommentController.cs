@@ -47,6 +47,7 @@ namespace web_api.Controllers
                 var user = db.User.Where(q => q.Id == c.UserId).FirstOrDefault();
                 Result.CommentList.Add(new CommentListResult.Comment
                 {
+                    id = c.Id,
                     articleId = c.ArticleId,
                     userAccount = user.Account,
                     userName = user.NikeName,
