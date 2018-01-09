@@ -191,6 +191,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CarousController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -203,6 +204,7 @@
     <Compile Include="Models\Blog\DeletePostData.cs" />
     <Compile Include="Models\Blog\SavePostData.cs" />
     <Compile Include="Models\Carousel\CarouslListResult.cs" />
+    <Compile Include="Models\Comment\SaveCommentDate.cs" />
     <Compile Include="Models\Other\AjaxStatus.cs" />
     <Compile Include="Models\Other\DataSourceRequest.cs" />
     <Compile Include="Models\Other\ListResult.cs" />

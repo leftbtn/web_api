@@ -24,6 +24,18 @@
           <Property Name="Scr" Type="nvarchar" MaxLength="200" />
           <Property Name="CreateDateTime" Type="datetime" />
         </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="CommentType" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="ArticleId" Type="varchar" MaxLength="32" />
+          <Property Name="Details" Type="ntext" Nullable="false" />
+          <Property Name="Img" Type="nvarchar" MaxLength="600" />
+          <Property Name="CreateDateTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
@@ -37,22 +49,18 @@
         <EntityContainer Name="myproModelStoreContainer">
           <EntitySet Name="Blog" EntityType="Self.Blog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carousel" EntityType="Self.Carousel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="myproModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="myproEntities1" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Blog" EntityType="myproModel.Blog" />
-          <EntitySet Name="Carousel" EntityType="myproModel.Carousel" />
-          <EntitySet Name="User" EntityType="myproModel.User" />
-        </EntityContainer>
         <EntityType Name="Blog">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Img" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
@@ -62,56 +70,87 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Img" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
           <Property Name="Scr" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CreateDateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CommentType" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Img" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDateTime" Type="DateTime" Precision="3" />
+          <Property Name="ArticleId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Account" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Account" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="NikeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreateDateTime" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityContainer Name="myproEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Blog" EntityType="Self.Blog" />
+          <EntitySet Name="Carousel" EntityType="Self.Carousel" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" />
+          <EntitySet Name="User" EntityType="Self.User" />
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="myproModelStoreContainer" CdmEntityContainer="myproEntities1">
+        <EntityContainerMapping StorageEntityContainer="myproModelStoreContainer" CdmEntityContainer="myproEntities">
           <EntitySetMapping Name="Blog">
             <EntityTypeMapping TypeName="myproModel.Blog">
               <MappingFragment StoreEntitySet="Blog">
-                <ScalarProperty Name="CreateDateTime" ColumnName="CreateDateTime" />
-                <ScalarProperty Name="Img" ColumnName="Img" />
-                <ScalarProperty Name="Details" ColumnName="Details" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="Img" ColumnName="Img" />
+                <ScalarProperty Name="CreateDateTime" ColumnName="CreateDateTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Carousel">
             <EntityTypeMapping TypeName="myproModel.Carousel">
               <MappingFragment StoreEntitySet="Carousel">
-                <ScalarProperty Name="CreateDateTime" ColumnName="CreateDateTime" />
-                <ScalarProperty Name="Scr" ColumnName="Scr" />
-                <ScalarProperty Name="Img" ColumnName="Img" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Img" ColumnName="Img" />
+                <ScalarProperty Name="Scr" ColumnName="Scr" />
+                <ScalarProperty Name="CreateDateTime" ColumnName="CreateDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comment">
+            <EntityTypeMapping TypeName="myproModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CommentType" ColumnName="CommentType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="Img" ColumnName="Img" />
+                <ScalarProperty Name="CreateDateTime" ColumnName="CreateDateTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="myproModel.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="CreateDateTime" ColumnName="CreateDateTime" />
-                <ScalarProperty Name="NikeName" ColumnName="NikeName" />
-                <ScalarProperty Name="Account" ColumnName="Account" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="NikeName" ColumnName="NikeName" />
+                <ScalarProperty Name="CreateDateTime" ColumnName="CreateDateTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

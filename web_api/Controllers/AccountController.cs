@@ -19,10 +19,11 @@ namespace web_api.Controllers
         {
             var result = new ResultData();
             result.success = false;
+            result.msg = string.Empty;
             var msg = string.Empty;
-            if (string.IsNullOrEmpty(data.Account) || string.IsNullOrEmpty(data.Password)) { msg = "帐号密码均不能为空"; return result; }
-            if (string.IsNullOrEmpty(data.NikeName)) { msg = "昵称不能为空"; return result; }
-            if (BLLService.AccountServices.ExistAccount(data.Account)) { msg = "用户名已注册"; return result; }
+            if (string.IsNullOrEmpty(data.Account) || string.IsNullOrEmpty(data.Password)) { result.msg = "帐号密码均不能为空"; return result; }
+            if (string.IsNullOrEmpty(data.NikeName)) { result.msg = "昵称不能为空"; return result; }
+            if (BLLService.AccountServices.ExistAccount(data.Account)) { result.msg = "用户名已注册"; return result; }
             var o = new User();
             o.Account = data.Account;
             o.Password = data.Password;
@@ -46,7 +47,7 @@ namespace web_api.Controllers
             var msg = string.Empty;
             if (string.IsNullOrEmpty(data.Account) || string.IsNullOrEmpty(data.Password))
             {
-                msg = "帐号密码均不能为空";
+                result.msg = "帐号密码均不能为空";
                 return result;
             }
             result.success = BLLService.AccountServices.Login(data.Account, data.Password, out msg);
@@ -70,7 +71,7 @@ namespace web_api.Controllers
             result.success = true;
             result.Account = o.Account;
             result.NikeName = o.NikeName;
-            result.CreateDateTime = Tools.ToDateString(o.CreateDateTime);
+            result.CreateDateTime = o.CreateDateTime.ToShortDateString();
             return result;
         }
         #endregion

@@ -19,6 +19,7 @@ namespace apiServices.BLLServices
                 m.Id = Tools.GetGuid();
                 m.CreateDateTime = DateTime.Now;
                 db.User.Add(m);
+                msg = m.Id;
                 result = db.SaveChanges() > 0;
             }
             catch(Exception ex)
@@ -64,8 +65,13 @@ namespace apiServices.BLLServices
         {
             return db.User.Where(c => c.Account == Account).FirstOrDefault() != null;
         }
-
         #endregion
 
+        #region 判断用户Id是否存在
+        public bool ExistUserId(string userid)
+        {
+            return db.User.Where(c => c.Id == userid).FirstOrDefault() != null;
+        }
+        #endregion
     }
 }

@@ -10,7 +10,7 @@ namespace apiServices.BLLServices
     {
         public GBLLService BLLService { get; set; }
 
-        public myproEntities1 db { get { return BLLService.DbContext; } }
+        public myproEntities db { get { return BLLService.DbContext; } }
 
         public string GetCurrentLoginAccountId()
         {

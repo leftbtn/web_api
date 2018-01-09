@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace web_api.Models.Blog
+namespace web_api.Models.Comment
 {
-    public class DeletePostData
+    public class SaveCommentDate
     {
         public string UserId { get; set; }
-        public string BlogId { get; set; }
         public string ArticleId { get; set; }
+        public string Details { get; set; }
     }
 }

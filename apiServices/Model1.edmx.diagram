@@ -4,10 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="221267aab3014cdf91819165ef897c2a" Name="Diagram1">
-        <EntityTypeShape EntityType="myproModel.Blog" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="myproModel.Carousel" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="myproModel.User" Width="1.5" PointX="0.75" PointY="3.75" />
+      <Diagram DiagramId="816d5a41fde148e4b8dd9dfa0141148d" Name="Diagram1">
+        <EntityTypeShape EntityType="myproModel.Blog" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="myproModel.Carousel" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="myproModel.Comment" Width="1.5" PointX="0.625" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="myproModel.User" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

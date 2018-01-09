@@ -63,10 +63,14 @@
     <Compile Include="BLLServices\AccountServices.cs" />
     <Compile Include="BLLServices\BlogServices.cs" />
     <Compile Include="BLLServices\CarouslService.cs" />
+    <Compile Include="BLLServices\CommentServices.cs" />
     <Compile Include="Blog.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Carousel.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Comment.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="GBLLService.cs" />
