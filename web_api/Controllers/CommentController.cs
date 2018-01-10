@@ -34,6 +34,28 @@ namespace web_api.Controllers
         }
         #endregion
 
+        #region 保存用户的评论的回复
+        [HttpPost]
+        public ResultData SaveReply([FromBody]SaveCommentDate m)
+        {
+            var result = new ResultData();
+            var o = new Reply();
+            var msg = string.Empty;
+            o.CommentId = m.CommentId;
+            o.FromId = m.FromId;
+            o.ToId = m.ToId;
+            o.Details = m.Details;
+            result.success = Transaction(new Func<bool>(delegate ()
+            {
+                result.success = BLLService.CommentServices.SaveReply(o, out msg);
+                return result.success;
+            }), ref msg);
+            result.msg = msg;
+            return result;
+        }
+        #endregion
+
+
 
         #region 根据文章id获取评论列表
         [HttpGet]
@@ -42,20 +64,38 @@ namespace web_api.Controllers
             var Result = new CommentListResult();
         
             var o = db.Comment.Where(c=>c.ArticleId == id).OrderByDescending(c=>c.CreateDateTime).ToList();
-            o.ForEach(c =>
+            foreach (var item in o)
             {
-                var user = db.User.Where(q => q.Id == c.UserId).FirstOrDefault();
+                var ReplyList = new List<CommentListResult.Reply>();
+                var user = db.User.Where(q => q.Id == item.UserId).FirstOrDefault();
+                if (BLLService.CommentServices.ExistReply(item.Id))
+                {
+                    var l = db.Reply.Where(c => c.CommentId == item.Id).OrderBy(c=>c.CreateDateTime).ToList();
+                    foreach(var r in l)
+                    {
+                        var fromAccont = BLLService.AccountServices.GetUserAccountForId(r.FromId);
+                        var toAccount = BLLService.AccountServices.GetUserAccountForId(r.ToId);
+                        ReplyList.Add(new CommentListResult.Reply
+                        {
+                            Id = r.Id,
+                            CommentId = r.CommentId,
+                            details = r.Details,
+                            FromAccount = fromAccont,
+                            ToAccount = toAccount
+                        });
+                    }
+                }
                 Result.CommentList.Add(new CommentListResult.Comment
                 {
-                    id = c.Id,
-                    articleId = c.ArticleId,
+                    id = item.Id,
+                    articleId = item.ArticleId,
                     userAccount = user.Account,
                     userName = user.NikeName,
-                    details = c.Details,
-                    createDateTime = Tools.ToDateString(c.CreateDateTime)
+                    details = item.Details,
+                    createDateTime = Tools.ToDateString(item.CreateDateTime),
+                    ReplyList = ReplyList
                 });
-            });
-        
+            }
             return Result;
         }
 

@@ -28,6 +28,7 @@ namespace apiServices
         public virtual DbSet<Blog> Blog { get; set; }
         public virtual DbSet<Carousel> Carousel { get; set; }
         public virtual DbSet<Comment> Comment { get; set; }
+        public virtual DbSet<Reply> Reply { get; set; }
         public virtual DbSet<User> User { get; set; }
     }
 }

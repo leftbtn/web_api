@@ -73,5 +73,13 @@ namespace apiServices.BLLServices
             return db.User.Where(c => c.Id == userid).FirstOrDefault() != null;
         }
         #endregion
+
+        #region 根据用户id获取account
+        public string GetUserAccountForId(string id)
+        {
+            return db.User.Where(c => c.Id == id).FirstOrDefault().Account;
+        }
+
+        #endregion
     }
 }

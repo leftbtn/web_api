@@ -19,6 +19,20 @@ namespace web_api.Models.Comment
             public string articleId { get; set; }
             public string details { get; set; }
             public string createDateTime { get; set; }
+            public List<Reply> ReplyList { get; set; }
+            public Comment()
+            {
+                ReplyList = new List<Reply>();
+            }
+
+        }
+        public class Reply
+        {
+            public string Id { get; set; }
+            public string CommentId { get; set; }
+            public string FromAccount { get; set; }
+            public string ToAccount { get; set; }
+            public string details { get; set; }
         }
     }
 }

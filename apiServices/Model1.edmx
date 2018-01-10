@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="myproModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="myproModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Blog">
           <Key>
             <PropertyRef Name="Id" />
@@ -36,6 +36,17 @@
           <Property Name="Img" Type="nvarchar" MaxLength="600" />
           <Property Name="CreateDateTime" Type="datetime" />
         </EntityType>
+        <EntityType Name="Reply">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="FromId" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="ToId" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="CommentId" Type="varchar" MaxLength="32" />
+          <Property Name="Details" Type="ntext" />
+          <Property Name="CreateDateTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
@@ -50,9 +61,11 @@
           <EntitySet Name="Blog" EntityType="Self.Blog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carousel" EntityType="Self.Carousel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reply" EntityType="Self.Reply" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="myproModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -82,10 +95,21 @@
           <Property Name="Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CommentType" Type="Int32" Nullable="false" />
           <Property Name="UserId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ArticleId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Img" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
           <Property Name="CreateDateTime" Type="DateTime" Precision="3" />
-          <Property Name="ArticleId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Reply">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="FromId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ToId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CommentId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -101,6 +125,7 @@
           <EntitySet Name="Blog" EntityType="Self.Blog" />
           <EntitySet Name="Carousel" EntityType="Self.Carousel" />
           <EntitySet Name="Comment" EntityType="Self.Comment" />
+          <EntitySet Name="Reply" EntityType="Self.Reply" />
           <EntitySet Name="User" EntityType="Self.User" />
         </EntityContainer>
       </Schema>
@@ -133,12 +158,24 @@
           <EntitySetMapping Name="Comment">
             <EntityTypeMapping TypeName="myproModel.Comment">
               <MappingFragment StoreEntitySet="Comment">
-                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CommentType" ColumnName="CommentType" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
                 <ScalarProperty Name="Details" ColumnName="Details" />
                 <ScalarProperty Name="Img" ColumnName="Img" />
+                <ScalarProperty Name="CreateDateTime" ColumnName="CreateDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reply">
+            <EntityTypeMapping TypeName="myproModel.Reply">
+              <MappingFragment StoreEntitySet="Reply">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FromId" ColumnName="FromId" />
+                <ScalarProperty Name="ToId" ColumnName="ToId" />
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
                 <ScalarProperty Name="CreateDateTime" ColumnName="CreateDateTime" />
               </MappingFragment>
             </EntityTypeMapping>

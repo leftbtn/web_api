@@ -12,14 +12,13 @@ namespace apiServices
     using System;
     using System.Collections.Generic;
     
-    public partial class Comment
+    public partial class Reply
     {
         public string Id { get; set; }
-        public int CommentType { get; set; }
-        public string UserId { get; set; }
-        public string ArticleId { get; set; }
+        public string FromId { get; set; }
+        public string ToId { get; set; }
+        public string CommentId { get; set; }
         public string Details { get; set; }
-        public string Img { get; set; }
         public Nullable<System.DateTime> CreateDateTime { get; set; }
     }
 }

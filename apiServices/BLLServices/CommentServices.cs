@@ -33,6 +33,34 @@ namespace apiServices.BLLServices
 
         #endregion
 
+        #region 保存评论的回复
+        public bool SaveReply(Reply m, out string msg)
+        {
+            bool result = false;
+            msg = string.Empty;
+            try
+            {
+                m.Id = Tools.GetGuid();
+                m.CreateDateTime = DateTime.Now;
+                db.Reply.Add(m);
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+            }
+            return result;
+        }
+        #endregion
+
+        #region 判断该条是否含有回复
+        public bool ExistReply(string id)
+        {
+            return db.Reply.Where(c => c.CommentId == id).FirstOrDefault() != null;
+        }
+
+        #endregion
+
+
         #region 根据文章id删除评论
         public bool Delete(string id, out string msg)
         {
@@ -57,5 +85,7 @@ namespace apiServices.BLLServices
             return result;
         }
         #endregion
+
+
     }
 }
