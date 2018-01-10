@@ -73,8 +73,8 @@ namespace web_api.Controllers
                     var l = db.Reply.Where(c => c.CommentId == item.Id).OrderBy(c=>c.CreateDateTime).ToList();
                     foreach(var r in l)
                     {
-                        var fromAccont = BLLService.AccountServices.GetUserAccountForId(r.FromId);
-                        var toAccount = BLLService.AccountServices.GetUserAccountForId(r.ToId);
+                        var fromAccont = BLLService.AccountServices.GetUserNikeNameForId(r.FromId);
+                        var toAccount = BLLService.AccountServices.GetUserNikeNameForId(r.ToId);
                         ReplyList.Add(new CommentListResult.Reply
                         {
                             Id = r.Id,

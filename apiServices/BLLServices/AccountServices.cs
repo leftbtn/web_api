@@ -75,9 +75,9 @@ namespace apiServices.BLLServices
         #endregion
 
         #region 根据用户id获取account
-        public string GetUserAccountForId(string id)
+        public string GetUserNikeNameForId(string id)
         {
-            return db.User.Where(c => c.Id == id).FirstOrDefault().Account;
+            return db.User.Where(c => c.Id == id).FirstOrDefault().NikeName;
         }
 
         #endregion
