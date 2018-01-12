@@ -16,6 +16,7 @@ namespace web_api.Models.Comment
             public string id { get; set; }
             public string userName { get; set; }
             public string userAccount { get; set; }
+            public string userId { get; set; }
             public string articleId { get; set; }
             public string details { get; set; }
             public string createDateTime { get; set; }
@@ -31,8 +32,10 @@ namespace web_api.Models.Comment
             public string Id { get; set; }
             public string CommentId { get; set; }
             public string FromAccount { get; set; }
+            public string FromId { get; set; }
             public string ToAccount { get; set; }
             public string details { get; set; }
+           
         }
     }
 }

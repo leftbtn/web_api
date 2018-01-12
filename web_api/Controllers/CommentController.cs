@@ -81,6 +81,7 @@ namespace web_api.Controllers
                             CommentId = r.CommentId,
                             details = r.Details,
                             FromAccount = fromAccont,
+                            FromId = r.FromId,
                             ToAccount = toAccount
                         });
                     }
@@ -91,6 +92,7 @@ namespace web_api.Controllers
                     articleId = item.ArticleId,
                     userAccount = user.Account,
                     userName = user.NikeName,
+                    userId = item.UserId,
                     details = item.Details,
                     createDateTime = Tools.ToDateString(item.CreateDateTime),
                     ReplyList = ReplyList
