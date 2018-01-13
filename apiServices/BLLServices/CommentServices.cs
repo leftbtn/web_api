@@ -16,13 +16,14 @@ namespace apiServices.BLLServices
             msg = string.Empty;
             try
             {
-                result = db.User.Where(c=>c.Id == m.UserId).FirstOrDefault() != null;
+                result = db.User.Where(c=>c.Id == m.UserId).FirstOrDefault() == null;
                 if (result) { msg = "找不到该用户"; return result; }
-                result = db.Blog.Where(c=>c.Id == m.ArticleId).FirstOrDefault() != null;
+                result = db.Blog.Where(c=>c.Id == m.ArticleId).FirstOrDefault() == null;
                 if (result) { msg = "找不到该篇文章"; return result; }
                 m.Id = Tools.GetGuid();
                 m.CreateDateTime = DateTime.Now;
                 db.Comment.Add(m);
+                result = db.SaveChanges() > 0;
             }
             catch (Exception ex)
             {
@@ -43,6 +44,7 @@ namespace apiServices.BLLServices
                 m.Id = Tools.GetGuid();
                 m.CreateDateTime = DateTime.Now;
                 db.Reply.Add(m);
+                result = db.SaveChanges() > 0;
             }
             catch (Exception ex)
             {
