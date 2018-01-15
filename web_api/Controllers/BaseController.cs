@@ -84,6 +84,7 @@ namespace web_api.Controllers
         public BlogServices BlogServices { get { return BLLService.BlogServices; } }
         public CarouslService CarouslService { get { return BLLService.CarouslService; } }
         public AccountServices AccountServices { get { return BLLService.AccountServices; } }
+        public CommentServices CommentServices { get { return BLLService.CommentServices; } }
 
     }
 }
