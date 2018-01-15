@@ -35,7 +35,7 @@ namespace web_api.Models.Comment
             public string FromId { get; set; }
             public string ToAccount { get; set; }
             public string details { get; set; }
-           
+            public string createDateTime { get; set; }
         }
     }
 }

@@ -30,7 +30,7 @@ namespace web_api.Controllers
         }
 
 
-        public bool Transaction(Func<bool> fun, ref string msg, Func<Exception, string> exceptionAction = null)
+        protected bool Transaction(Func<bool> fun, ref string msg, Func<Exception, string> exceptionAction = null)
         {
             var result = false;
 
