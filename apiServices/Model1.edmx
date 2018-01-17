@@ -24,15 +24,11 @@
           <Property Name="Scr" Type="nvarchar" MaxLength="200" />
           <Property Name="CreateDateTime" Type="datetime" />
         </EntityType>
-        <!--生成过程中发现错误:
-警告 6002: 表/视图“mypro.dbo.Comment”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="Comment">
           <Key>
-            <PropertyRef Name="CommentType" />
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="Details" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="varchar" MaxLength="32" />
+          <Property Name="Id" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="CommentType" Type="int" Nullable="false" />
           <Property Name="UserId" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="ArticleId" Type="varchar" MaxLength="32" />
@@ -64,19 +60,9 @@
         <EntityContainer Name="myproModelStoreContainer">
           <EntitySet Name="Blog" EntityType="Self.Blog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carousel" EntityType="Self.Carousel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reply" EntityType="Self.Reply" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Comment" EntityType="Self.Comment" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Comment].[Id] AS [Id], 
-    [Comment].[CommentType] AS [CommentType], 
-    [Comment].[UserId] AS [UserId], 
-    [Comment].[ArticleId] AS [ArticleId], 
-    [Comment].[Details] AS [Details], 
-    [Comment].[Img] AS [Img], 
-    [Comment].[CreateDateTime] AS [CreateDateTime]
-    FROM [dbo].[Comment] AS [Comment]</DefiningQuery>
-          </EntitySet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -102,6 +88,18 @@
           <Property Name="Scr" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CreateDateTime" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CommentType" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ArticleId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Img" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDateTime" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="Reply">
           <Key>
             <PropertyRef Name="Id" />
@@ -123,26 +121,12 @@
           <Property Name="NikeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreateDateTime" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <EntityType Name="Comment">
-          <Key>
-            <PropertyRef Name="CommentType" />
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="Details" />
-          </Key>
-          <Property Name="Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="CommentType" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ArticleId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Img" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDateTime" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityContainer Name="myproEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Blog" EntityType="Self.Blog" />
           <EntitySet Name="Carousel" EntityType="Self.Carousel" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" />
           <EntitySet Name="Reply" EntityType="Self.Reply" />
           <EntitySet Name="User" EntityType="Self.User" />
-          <EntitySet Name="Comment" EntityType="Self.Comment" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -171,6 +155,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Comment">
+            <EntityTypeMapping TypeName="myproModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CommentType" ColumnName="CommentType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="Img" ColumnName="Img" />
+                <ScalarProperty Name="CreateDateTime" ColumnName="CreateDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Reply">
             <EntityTypeMapping TypeName="myproModel.Reply">
               <MappingFragment StoreEntitySet="Reply">
@@ -190,19 +187,6 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Account" ColumnName="Account" />
                 <ScalarProperty Name="NikeName" ColumnName="NikeName" />
-                <ScalarProperty Name="CreateDateTime" ColumnName="CreateDateTime" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Comment">
-            <EntityTypeMapping TypeName="myproModel.Comment">
-              <MappingFragment StoreEntitySet="Comment">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CommentType" ColumnName="CommentType" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
-                <ScalarProperty Name="Details" ColumnName="Details" />
-                <ScalarProperty Name="Img" ColumnName="Img" />
                 <ScalarProperty Name="CreateDateTime" ColumnName="CreateDateTime" />
               </MappingFragment>
             </EntityTypeMapping>
