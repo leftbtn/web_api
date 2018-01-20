@@ -54,6 +54,11 @@
           <Property Name="Id" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Account" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="600" />
+          <Property Name="Address" Type="nvarchar" MaxLength="600" />
+          <Property Name="Phone" Type="varchar" MaxLength="32" />
+          <Property Name="birthday" Type="datetime" />
+          <Property Name="HeadImg" Type="nvarchar" MaxLength="600" />
           <Property Name="NikeName" Type="varchar" MaxLength="50" />
           <Property Name="CreateDateTime" Type="datetime" Nullable="false" />
         </EntityType>
@@ -118,6 +123,11 @@
           <Property Name="Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Account" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="birthday" Type="DateTime" Precision="3" />
+          <Property Name="HeadImg" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
           <Property Name="NikeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreateDateTime" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
@@ -186,6 +196,11 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="birthday" ColumnName="birthday" />
+                <ScalarProperty Name="HeadImg" ColumnName="HeadImg" />
                 <ScalarProperty Name="NikeName" ColumnName="NikeName" />
                 <ScalarProperty Name="CreateDateTime" ColumnName="CreateDateTime" />
               </MappingFragment>

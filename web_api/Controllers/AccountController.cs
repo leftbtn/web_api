@@ -75,6 +75,58 @@ namespace web_api.Controllers
             return result;
         }
         #endregion
+
+
+        #region 保存用户的详细信息
+        [HttpPost]
+        public ResultData SaveUserDeatailInfo([FromBody]SaveUserPostData data)
+        {
+            var result = new ResultData();
+            result.success = false;
+            result.msg = string.Empty;
+            var msg = string.Empty;
+            var o = new User();
+            o.Id = data.UserId;
+            o.Address = data.Addres;
+            if (!string.IsNullOrEmpty(data.birthday)) { o.birthday = Convert.ToDateTime(data.birthday); }
+            o.Email = data.Email;
+            o.HeadImg = data.HeadImg;
+            o.NikeName = data.NikeName;
+            o.Phone = data.Phone;
+            result.success = Transaction(new Func<bool>(delegate ()
+            {
+                result.success = BLLService.AccountServices.SaveUserINfoDetail(o, out msg);
+                return result.success;
+            }), ref msg);
+            result.msg = msg;
+            return result;
+        }
+        #endregion
+
+        #region 获取一个用户的详细信息
+        [HttpGet]
+        public UserDetailInfo GetUserDeatilInfo(string userid)
+        {
+            var result = new UserDetailInfo();
+            result.success = false;
+            result.msg = string.Empty;
+            var o = db.User.Where(c => c.Id == userid).FirstOrDefault();
+            if (o == null)
+            {
+                result.msg = "找不到该用户";
+                return result;
+            }
+            result.success = true;
+            result.Email = o.Email;
+            result.birthday =  o.birthday == null? "" : Tools.ToDateString(o.birthday);
+            result.Address = o.Address;
+            result.Phone = o.Phone;
+            result.NikeName = o.NikeName;
+            result.Account = o.Account;
+            return result;
+        }
+
+        #endregion
     }
 
 }

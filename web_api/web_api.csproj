@@ -198,6 +198,8 @@
     </Compile>
     <Compile Include="Models\Account\LoginPostData.cs" />
     <Compile Include="Models\Account\RegisterPostData.cs" />
+    <Compile Include="Models\Account\SaveUserPostData.cs" />
+    <Compile Include="Models\Account\UserDetailInfo.cs" />
     <Compile Include="Models\Account\UserInfo.cs" />
     <Compile Include="Models\Blog\BlogDetailResult.cs" />
     <Compile Include="Models\Blog\BlogListResult.cs" />

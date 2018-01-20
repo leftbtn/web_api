@@ -60,6 +60,38 @@ namespace apiServices.BLLServices
         }
         #endregion
 
+        #region 保存一个人用户的详细信息
+        public  bool SaveUserINfoDetail(User m, out string msg)
+        {
+            bool result = false;
+            msg = string.Empty;
+            try
+            {
+                var o = db.User.Where(c => c.Id == m.Id).FirstOrDefault();
+                if (o == null)
+                {
+                    msg = "该用户不存在";
+                }
+                else
+                {
+                    o.HeadImg = m.HeadImg;
+                    o.NikeName = m.NikeName;
+                    o.Phone = m.Phone;
+                    o.Address = m.Address;
+                    o.birthday = m.birthday;
+                    o.Email = m.Email;
+                }
+                result = db.SaveChanges() > 0;
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+            }
+
+            return result;
+        } 
+        #endregion
+
         #region 判断帐号是否存在
         public bool ExistAccount(string Account)
         {

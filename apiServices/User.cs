@@ -17,6 +17,11 @@ namespace apiServices
         public string Id { get; set; }
         public string Password { get; set; }
         public string Account { get; set; }
+        public string Email { get; set; }
+        public string Address { get; set; }
+        public string Phone { get; set; }
+        public Nullable<System.DateTime> birthday { get; set; }
+        public string HeadImg { get; set; }
         public string NikeName { get; set; }
         public System.DateTime CreateDateTime { get; set; }
     }
