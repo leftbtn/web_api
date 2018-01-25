@@ -16,6 +16,7 @@ namespace web_api.Models.Comment
             public string id { get; set; }
             public string userName { get; set; }
             public string userAccount { get; set; }
+            public string userImg { get; set; }
             public string userId { get; set; }
             public string articleId { get; set; }
             public string details { get; set; }

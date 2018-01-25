@@ -14,5 +14,6 @@ namespace web_api.Models.Account
         public string Address { get; set; }
         public string Email { get; set; }
         public string birthday { get; set; }
+        public string HeadImg { get; set; }
     }
 }

@@ -93,6 +93,7 @@ namespace web_api.Controllers
                     articleId = item.ArticleId,
                     userAccount = user.Account,
                     userName = user.NikeName,
+                    userImg = user.HeadImg??"",
                     userId = item.UserId,
                     details = item.Details,
                     createDateTime = Tools.ToDateString(item.CreateDateTime),

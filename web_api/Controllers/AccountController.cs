@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
+
 using System.Linq;
-using System.Net;
-using System.Net.Http;
+
 using System.Web.Http;
 using CommonFrameWork;
 using web_api.Models.Other;
 using apiServices;
 using web_api.Models.Account;
+using System.IO;
+using System.Web;
 
 namespace web_api.Controllers
 {
@@ -93,6 +94,7 @@ namespace web_api.Controllers
             o.HeadImg = data.HeadImg;
             o.NikeName = data.NikeName;
             o.Phone = data.Phone;
+            o.HeadImg = data.HeadImg;
             result.success = Transaction(new Func<bool>(delegate ()
             {
                 result.success = BLLService.AccountServices.SaveUserINfoDetail(o, out msg);
@@ -123,9 +125,54 @@ namespace web_api.Controllers
             result.Phone = o.Phone;
             result.NikeName = o.NikeName;
             result.Account = o.Account;
+            result.HeadImg = o.HeadImg;
             return result;
         }
 
+        #endregion
+
+
+
+        #region 保存用户的头像
+        [HttpPost]
+        public string UploadImg()
+        {
+            var File = HttpContext.Current.Request.Files["file"];
+            if (File == null)
+            {
+                return JsonHelper.ToJson(new { status = false, msg = "图片上传失败！" });
+            }
+
+            bool IsImg = false;
+            string fileExtension = System.IO.Path.GetExtension(File.FileName).ToLower();
+            string[] allowedExtensions = { ".gif", ".png", ".bmp", ".jpg" };
+            for (int i = 0; i < allowedExtensions.Length; i++)
+            {
+                if (fileExtension == allowedExtensions[i])
+                {
+                    IsImg = true;
+                }
+            }
+
+            if (!IsImg)
+            {
+                return JsonHelper.ToJson(new { status = false, msg = "上传的文件必须是图片！" });
+            }
+
+            string fileName = SystemHelper.CreateGuid() + fileExtension;
+
+            var UpLoadImagePath = Tools.GetWebPhysicalPath() + "UploadImages/";
+
+            if (!Directory.Exists(UpLoadImagePath))
+            {
+                Directory.CreateDirectory(UpLoadImagePath);
+            }
+            File.SaveAs(UpLoadImagePath + fileName);
+            //FileUpload.SaveToRemoteServer(File, ConfigurationManager.AppSettings["UpLoadImagePath"], fileName);
+            string ShowImage = Tools.GetWebPath() + "/UploadImages/" + fileName;
+
+            return JsonHelper.ToJson(new { status = true, msg = ShowImage });
+        }
         #endregion
     }
 
